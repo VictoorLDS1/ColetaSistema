@@ -1,0 +1,23 @@
+[
+    {"id": 1, "nome": "Reciclavel A", "email": "recA@email.com", "tipo": "Reciclado", "bairro": "Floresta"},
+    {"id": 2, "nome": "Reciclavel B", "email": "recB@email.com", "tipo": "Reciclado", "bairro": "Aventureiro"},
+    {"id": 3, "nome": "Reciclavel C", "email": "recC@email.com", "tipo": "Reciclado", "bairro": "América"},
+    {"id": 4, "nome": "Reciclavel D", "email": "recD@email.com", "tipo": "Reciclado", "bairro": "Centro"},
+    {"id": 5, "nome": "Pilhas A", "email": "pilhasA@email.com", "tipo": "Pilhas", "bairro": "Comasa"},
+    {"id": 6, "nome": "Pilhas B", "email": "pilhasBemail.com", "tipo": "Pilhas", "bairro": "Paranaguamirim"},
+    {"id": 7, "nome": "Pilhas C", "email": "pilhasC@email.com", "tipo": "Pilhas", "bairro": "Floresta"},
+    {"id": 8, "nome": "Móveis A", "email": "moveisA@email.com", "tipo": "Móveis", "bairro": "Santa Catarina"},
+    {"id": 9, "nome": "Móveis B", "email": "moveisB@email.com", "tipo": "Móveis", "bairro": "Aventureiro"},
+    {"id": 10, "nome": "Móveis C", "email": "moveisC@email.com", "tipo": "Móveis", "bairro": "Costa e Silva"},
+    {"id": 11, "nome": "Móveis D", "email": "moveisD@email.com", "tipo": "Móveis", "bairro": "Glória"},
+    {"id": 12, "nome": "Industrial A", "email": "indA@email.com", "tipo": "Industrial", "bairro": "João Costa"},
+    {"id": 13, "nome": "Industrial B", "email": "indB@email.com", "tipo": "Industrial", "bairro": "Itaum"},
+    {"id": 14, "nome": "Industrial C", "email": "indC@email.com", "tipo": "Industrial", "bairro": "Itinga"},
+    {"id": 15, "nome": "Industrial D", "email": "indD@email.com", "tipo": "Industrial", "bairro": "Profipo"},
+    {"id": 16, "nome": "Industrial E", "email": "indE@email.com", "tipo": "Industrial", "bairro": "Floresta"},
+    {"id": 17, "nome": "Sucata A", "email": "sucA@email.com", "tipo": "Sucata", "bairro": "Vila Nova"},
+    {"id": 18, "nome": "Sucata B", "email": "sucB@email.com", "tipo": "Sucata", "bairro": "Boa Vista"},
+    {"id": 19, "nome": "Sucata C", "email": "sucC@email.com", "tipo": "Sucata", "bairro": "Boa Vista"},
+    {"id": 20, "nome": "Sucata D", "email": "sucD@email.com", "tipo": "Sucata", "bairro": "Iririu"},
+    {"id": 21, "nome": "Sucata E", "email": "sucE@email.com", "tipo": "Sucata", "bairro": "Jardim Iririu"}
+]

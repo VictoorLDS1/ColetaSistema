@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abrir Chamado — Coleta Seletiva Joinville</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Coleta Seletiva JVL</a>
+    <ul class="nav-links">
+      <li><a href="index.html#entidades">Entidades</a></li>
+      <li><a href="index.html#mapa">Mapa</a></li>
+      <li><a href="occurence.html">Registrar Ocorrência</a></li>
+      <li><a href="myoccurences.html">Minhas Ocorrências</a></li>
+    </ul>
+  </nav>
+
+  <div class="chamado-content">
+
+    <a href="index.html" class="back-link">← Voltar</a>
+
+    <h1>Abrir Chamado</h1>
+    <p class="subtitle">Preencha o formulário abaixo para registrar uma ocorrência.</p>
+
+    <form onsubmit="handleSubmit(event)">
+
+      <div class="form-section">
+        <label for="tipo">Tipo de ocorrência</label>
+        <select id="tipo" required>
+          <option value="">Selecione</option>
+          <option>Reciclado</option>
+          <option>Móveis</option>
+          <option>Pilhas</option>
+          <option>Industrial</option>
+          <option>Sucata</option>
+        </select>
+      </div>
+
+      <div class="form-section">
+        <label for="endereco">Endereço da ocorrência</label>
+        <input type="text" id="endereco" placeholder="Rua, número" required />
+      </div>
+
+      <div class="form-section">
+        <label for="bairro">Bairro</label>
+        <input type="text" id="bairro" placeholder="Bairro" required />
+      </div>
+
+      <div class="form-section form-row">
+        <div>
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" placeholder="Seu nome" required />
+        </div>
+        <div>
+          <label for="telefone">Telefone</label>
+          <input type="tel" id="telefone" placeholder="(47) 9 0000-0000" required />
+        </div>
+      </div>
+
+      <div class="form-section">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" placeholder="seu@email.com" required />
+      </div>
+
+      <div class="form-section">
+        <label for="descricao">Descrição</label>
+        <textarea id="descricao" placeholder="Descreva o que aconteceu..." required></textarea>
+      </div>
+
+      <div class="form-section">
+        <label for="entidades">Entidades disponíveis</label>
+        <select id="entidades" required disabled>
+          <option value="">Selecione</option>
+          <option>Reciclado</option>
+          <option>Móveis</option>
+          <option>Pilhas</option>
+          <option>Industrial</option>
+          <option>Sucata</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-submit">Enviar Chamado</button>
+
+    </form>
+
+    <p id="msg" style="display:none; margin-top:20px; font-size:14px; color:#2d6a4f; text-align:center; font-weight:500;">
+      ✓ Chamado registrado com sucesso! Em breve entraremos em contato.
+    </p>
+
+  </div>
+
+  <footer></footer>
+
+  <script>
+    const API_URL = "http://127.0.0.1:5000/";
+
+    document.getElementById("tipo").addEventListener("change", MountEntitiesSelect);
+    document.getElementById("bairro").addEventListener("blur", MountEntitiesSelect);
+
+    async function getEntities(bairro, tipo) {
+        const res = await fetch(`${API_URL}/entities/${bairro}/${tipo}`);
+        const entidades = await res.json();
+        return entidades;
+    }
+
+    async function MountEntitiesSelect() {
+        const bairro = document.getElementById('bairro').value;
+        const tipo = document.getElementById('tipo').value;
+        const select = document.getElementById('entidades');
+
+        if (bairro !== "" && tipo !== "") {
+
+            const entidades = await getEntities(bairro, tipo);
+
+            select.disabled = false;
+            select.innerHTML = '<option value="">Selecione uma entidade</option>';
+
+            if (!entidades || entidades.length === 0) {
+                alert("Não há entidades desse tipo no bairro escolhido");
+                return;
+            }
+
+            entidades.forEach(entidade => {
+                const option = document.createElement('option');
+                option.value = entidade.id;
+                option.textContent = entidade.nome;
+                select.appendChild(option);
+            });
+        }
+    }
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+            const id = Math.random();
+      const nome = document.getElementById("nome").value;
+      const tipo = document.getElementById("tipo").value;
+      const bairro = document.getElementById("bairro").value;
+      const descricao = document.getElementById("descricao").value;
+      const status = "Em Andamento";
+
+      const res = await fetch(`${API_URL}/occurences`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(
+          {
+            "id": id, 
+            "nome": nome, 
+            "tipo": tipo, 
+            "bairro": bairro,
+            "descricao": descricao,
+            "status": status
+          }
+        )
+      });
+
+      e.target.style.display = 'none';
+      document.getElementById('msg').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minhas Ocorrências – Coleta Seletiva JVL</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Coleta Seletiva JVL</a>
+    <ul class="nav-links">
+      <li><a href="index.html#entidades">Entidades</a></li>
+      <li><a href="index.html#mapa">Mapa</a></li>
+      <li><a href="occurence.html">Registrar Ocorrência</a></li>
+    </ul>
+  </nav>
+
+  <div class="ocorrencias-content">
+
+    <a href="index.html" class="back-link">← Voltar</a>
+
+    <h1>Minhas Ocorrências</h1>
+    <p class="subtitle">Acompanhe o status das ocorrências que você registrou</p>
+
+    <div id="lista-ocorrencias"></div>
+
+    <div style="text-align: center; margin-top: 12px;">
+      <a href="occurence.html" class="nova-btn">+ Nova Ocorrência</a>
+    </div>
+
+  </div>
+
+  <footer></footer>
+
+  <script>
+    const API_URL = "http://127.0.0.1:5000/";
+
+    async function getOccurences() {
+        const res = await fetch(`${API_URL}/occurences/`);
+        const occurences = await res.json();
+        return occurences;
+    }
+
+    const badgeClass = {
+      "Pendente":     "badge-pendente",
+      "Em andamento": "badge-andamento",
+      "Resolvida":    "badge-resolvida"
+    };
+
+    async function renderizar() {
+      const lista = document.getElementById("lista-ocorrencias");
+      const occurences = await getOccurences();
+
+      if (occurences.length === 0) {
+        lista.innerHTML = `
+          <div class="empty-state">
+            <svg width="40" height="40" fill="none" stroke="#ccc" stroke-width="1.5" viewBox="0 0 24 24">
+              <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+              <rect x="9" y="3" width="6" height="4" rx="1"/>
+              <path d="M9 12h6M9 16h4"/>
+            </svg>
+            <p>Nenhuma ocorrência encontrada.</p>
+          </div>`;
+        return;
+      }
+
+      lista.innerHTML = occurences.map(o => `
+        <div class="ocorrencia-card">
+          <div class="ocorrencia-header">
+            <span class="ocorrencia-titulo">${o.id}</span>
+          </div>
+          <p class="ocorrencia-desc">${o.descricao}</p>
+          <div class="ocorrencia-footer">
+            <div class="ocorrencia-meta">
+              <span>📍 ${o.bairro}</span>
+              <span>♻️ ${o.tipo}</span>
+            </div>
+            <span class="badge ${badgeClass[o.status]}">${o.status}</span>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    renderizar();
+  </script>
+
+</body>
+</html>
